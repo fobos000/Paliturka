@@ -1,0 +1,7 @@
+Django==1.7
+Pillow==2.6.1
+Unidecode==0.04.16
+argparse==1.2.1
+django-facebook==6.0.2
+psycopg2==2.5.4
+wsgiref==0.1.2
