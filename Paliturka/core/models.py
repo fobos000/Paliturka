@@ -17,19 +17,13 @@ class Book(models.Model):
 
     name = models.CharField(max_length=100)
     description = models.TextField(max_length=200)
-    author = models.CharField(max_length=100)
-    genre = models.CharField(max_length=50, blank=True)
-    country = models.ForeignKey(Country, blank=True)
-    publisher = models.CharField(max_length=100, blank=True)
-    shelf = models.ForeignKey(Shelf, blank=True)
     status = models.CharField(max_length=4,
                               choices=BOOK_STATUS,
                               default=WILD)
-    rate = models.DecimalField(blank=True)
-    history = models.ForeignKey(BookHistory, blank=True)
-    feedback = models.ForeignKey(Feedback, blank=True)
+    rate = models.DecimalField(blank=True, decimal_places=3, max_digits=3)
     imdb = models.URLField(blank=True)
     image = models.ImageField(blank=True)
+    feedback = models.ForeignKey('Feedback')
 
 
 class BookHistory(models.Model):
@@ -38,8 +32,10 @@ class BookHistory(models.Model):
     users that have read it, shelf where it live in wild
 
     """
-    #TODO: implement History model
-    pass
+    book = models.ForeignKey(Book, related_name='history')
+    user = models.ForeignKey(FacebookCustomUser)
+    start_date = models.DateField()
+    end_date = models.DateField()
 
 
 class Country(models.Model):
@@ -48,21 +44,49 @@ class Country(models.Model):
     """
     name = models.CharField(max_length=100)
     code = models.CharField(max_length=4)
-    flag = models.ImageField
-
-
-class Shelf(models.Model):
-    """
-    Shelf models. Will indicate location of books in wild
-    """
-    pass
+    flag = models.ImageField(blank=True)
+    book = models.ForeignKey(Book, related_name='countries')
 
 
 class Feedback(models.Model):
     """
     Feedback model that will store Users comments for Books
     """
-    user = models.ForeignKey(FacebookCustomUser, related_name='feedbacks')
+    user = models.ForeignKey(FacebookCustomUser, related_name='comments')
     comment = models.TextField(max_length=200)
     time = datetime.now()
-    book = models.ManyToManyField(Book, related_name='feedbacks')
+
+
+class Shelf(models.Model):
+    """
+    Shelf models. Will indicate location of books in wild
+    """
+    book = models.ForeignKey(Book, related_name='shelves')
+    photo = models.ImageField(blank=True)
+    address = models.CharField(max_length=50)
+    rate = models.DecimalField(blank=True, decimal_places=3, max_digits=3)
+    feedback = models.ForeignKey(Feedback)
+
+
+class Genre(models.Model):
+    """
+    Book genre model
+    """
+    book = models.ForeignKey(Book, related_name='genre')
+    name = models.CharField(max_length=50)
+
+
+class Publisher(models.Model):
+    """
+    Book publisher model
+    """
+    book = models.ForeignKey(Book, related_name='publisher')
+    name = models.CharField(max_length=50)
+
+
+class Author(models.Model):
+    """
+    Book author model
+    """
+    name = models.CharField(max_length=100)
+    book = models.ForeignKey(Book, related_name='author')
