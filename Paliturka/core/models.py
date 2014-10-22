@@ -24,6 +24,11 @@ class Book(models.Model):
     imdb = models.URLField(blank=True)
     image = models.ImageField(blank=True)
     feedback = models.ForeignKey('Feedback')
+    history = models.ForeignKey('BookHistory')
+    book = models.ForeignKey('Shelf')
+    genre = models.ForeignKey('Genre')
+    publisher = models.ForeignKey('Publisher')
+    author = models.ForeignKey('Author')
 
 
 class BookHistory(models.Model):
@@ -32,7 +37,6 @@ class BookHistory(models.Model):
     users that have read it, shelf where it live in wild
 
     """
-    book = models.ForeignKey(Book, related_name='history')
     user = models.ForeignKey(FacebookCustomUser)
     start_date = models.DateField()
     end_date = models.DateField()
@@ -45,7 +49,6 @@ class Country(models.Model):
     name = models.CharField(max_length=100)
     code = models.CharField(max_length=4)
     flag = models.ImageField(blank=True)
-    book = models.ForeignKey(Book, related_name='countries')
 
 
 class Feedback(models.Model):
@@ -61,7 +64,6 @@ class Shelf(models.Model):
     """
     Shelf models. Will indicate location of books in wild
     """
-    book = models.ForeignKey(Book, related_name='shelves')
     photo = models.ImageField(blank=True)
     address = models.CharField(max_length=50)
     rate = models.DecimalField(blank=True, decimal_places=3, max_digits=3)
@@ -72,7 +74,6 @@ class Genre(models.Model):
     """
     Book genre model
     """
-    book = models.ForeignKey(Book, related_name='genre')
     name = models.CharField(max_length=50)
 
 
@@ -80,7 +81,6 @@ class Publisher(models.Model):
     """
     Book publisher model
     """
-    book = models.ForeignKey(Book, related_name='publisher')
     name = models.CharField(max_length=50)
 
 
@@ -89,4 +89,3 @@ class Author(models.Model):
     Book author model
     """
     name = models.CharField(max_length=100)
-    book = models.ForeignKey(Book, related_name='author')
