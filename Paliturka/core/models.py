@@ -25,7 +25,7 @@ class Book(models.Model):
     image = models.ImageField(blank=True)
     feedback = models.ForeignKey('Feedback')
     history = models.ForeignKey('BookHistory')
-    book = models.ForeignKey('Shelf')
+    shelf = models.ForeignKey('Shelf')
     genre = models.ForeignKey('Genre')
     publisher = models.ForeignKey('Publisher')
     author = models.ForeignKey('Author')
