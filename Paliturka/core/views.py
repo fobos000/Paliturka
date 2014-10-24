@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.views.generic import TemplateView, FormView
 from models import Book
 from datetime import datetime
+from forms import CreateNewBookForm
 
 
 class IndexView(TemplateView):
@@ -12,5 +13,13 @@ class IndexView(TemplateView):
         kwargs['today_books'] = today_books
         return kwargs
 
+
 class CreateBookView(FormView):
     template_name = 'new_book.html'
+    form_class = CreateNewBookForm
+
+    def post(self, request, *args, **kwargs):
+        form_class = self.get_form_class()
+        form = self.get_form(form_class)
+        if form.is_valid():
+            print 'fdvfdv'
