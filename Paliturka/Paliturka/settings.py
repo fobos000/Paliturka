@@ -45,6 +45,8 @@ INSTALLED_APPS = (
     'django_facebook',
     'core',
     'bootstrapform',
+    'bootstrap3',
+    'djangular',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -115,3 +117,5 @@ AUTH_USER_MODEL = 'django_facebook.FacebookCustomUser'
 # https://docs.djangoproject.com/en/1.7/howto/static-files/
 
 STATIC_URL = '/static/'
+PROJECT_DIR=os.path.dirname(__file__)
+STATIC_ROOT= os.path.join(PROJECT_DIR,'static/')
