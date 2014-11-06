@@ -7,11 +7,11 @@
 </head>
 <body>
 {% block content %}
-<div class="form-group col-xs-6 col-sm-3 " ng-app="Book" >
+<div class="form-group col-xs-6 col-sm-3 ">
 <form name="{{ form.form_name }}" novalidate>
     {% csrf_token %}
     {{ form }}
-    <input type="submit" class="btn" ng-disabled="{{ form.form_name }}.$invalid" value="Submit">
+    <input type="submit" class="btn" value="Submit">
 </form>
 </div>
 {% endblock %}

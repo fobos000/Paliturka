@@ -1,9 +1,8 @@
 from django import forms
 from models import Book, Shelf
-from djangular.forms import NgFormValidationMixin
 
 
-class CreateNewBookForm(NgFormValidationMixin, forms.Form):
+class CreateNewBookForm(forms.Form):
     form_name = 'create_book'
     name = forms.CharField(label='Name', max_length=100)
     description = forms.CharField(label='Description', widget=forms.Textarea(attrs={'maxlength': 10000}),

@@ -45,8 +45,6 @@ INSTALLED_APPS = (
     'django_facebook',
     'core',
     'bootstrapform',
-    'bootstrap3',
-    'djangular',
 )
 
 MIDDLEWARE_CLASSES = (
